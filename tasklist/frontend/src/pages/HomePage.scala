@@ -1,13 +1,14 @@
-package tasklist.frontend
+package tasklist.frontend.pages
 
 import com.raquo.laminar.api.L.*
+import tasklist.frontend.services.HttpClient
 import zio.*
 
 case class HomePage(httpClient: HttpClient) {
   import httpClient.extensions._
   def render = ZIO.attempt {
     div(
-      text <-- Endpoints.todosEndpoint.send(()).map(_.toString()).toEventStream
+      "Hello, world!"
     )
   }
 }

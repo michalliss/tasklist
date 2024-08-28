@@ -7,7 +7,11 @@ object Main extends ZIOAppDefault {
     .serviceWithZIO[App](_.run)
     .provide(
       ZLayer.derive[App],
-      ZLayer.derive[HomePage],
-      ZLayer.derive[HttpClient]
+      ZLayer.derive[pages.HomePage],
+      ZLayer.derive[services.HttpClient],
+      ZLayer.derive[services.Router],
+      ZLayer.derive[services.AuthService],
+      ZLayer.derive[services.StorageService],
+      ZLayer.derive[components.Layout]
     )
 }

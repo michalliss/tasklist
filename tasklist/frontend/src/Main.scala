@@ -8,6 +8,9 @@ object Main extends ZIOAppDefault {
     .provide(
       ZLayer.derive[App],
       ZLayer.derive[pages.HomePage],
+      ZLayer.derive[pages.TodoListPage],
+      ZLayer.derive[pages.LoginPage],
+      ZLayer.derive[pages.RegisterPage],
       ZLayer.derive[services.HttpClient],
       ZLayer.derive[services.Router],
       ZLayer.derive[services.AuthService],

@@ -47,7 +47,8 @@ object tasklist extends Module {
 
     def moduleDeps = Seq(shared.js)
     def ivyDeps    = Agg(
-      ivy"io.github.michalliss::foxxy-frontend::0.0.4"
+      ivy"io.github.michalliss::foxxy-frontend::0.0.4",
+      ivy"be.doeraene::web-components-ui5::2.0.0-RC2"
     )
   }
 

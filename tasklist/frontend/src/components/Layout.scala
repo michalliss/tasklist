@@ -1,31 +1,65 @@
 package tasklist.frontend.components
 
-import be.doeraene.webcomponents.ui5.configkeys.IconName
-import be.doeraene.webcomponents.ui5.{Button, ShellBar, SideNavigation}
+import be.doeraene.webcomponents.ui5.configkeys.{IconName, ListSeparator, PopoverPlacementType}
+import be.doeraene.webcomponents.ui5.{Icon, Popover, ShellBar, SideNavigation, Title, UList}
 import com.raquo.laminar.api.L.*
 import foxxy.frontend.utils.*
-import zio.*
-import zio.json.JsonCodec
-import zio.stream.ZStream
-import tasklist.frontend.services.Router.Page
-
+import org.scalajs.dom.HTMLElement
 import tasklist.frontend.services.*
+import tasklist.frontend.services.Router.Page
+import zio.*
 
 case class Layout(authSerivce: AuthService, router: Router) {
   def layout(content: HtmlElement) = ZIO.attempt {
-    val toggleCollapseBus: EventBus[Unit] = new EventBus
-    val collapsedSignal                   = toggleCollapseBus.events.scanLeft(false)((collapsed, _) => !collapsed)
+    val toggleCollapseBus: EventBus[Unit]     = new EventBus
+    val collapsedSignal                       = toggleCollapseBus.events.scanLeft(false)((collapsed, _) => !collapsed)
+    val openPopoverBus: EventBus[HTMLElement] = new EventBus
+    val profileId                             = "shellbar-profile-id"
     vDiv(
-      ShellBar(
-        _.primaryTitle      := "Foxxy TODO Reference App",
-        _.showCoPilot       := true,
-        _.slots.startButton := Button(
-          _.icon := IconName.menu,
-          _.events.onClick.mapTo(()) --> toggleCollapseBus.writer
-        ),
-        _.slots.profile     := div(
-          authSerivce.isLoggedIn
+      Popover(
+        _.id            := profileId,
+        _.showAtFromEvents(openPopoverBus.events),
+        _.placementType := PopoverPlacementType.Bottom,
+        div(
+          UList(
+            _.separators := ListSeparator.None,
+            if authSerivce.isLoggedIn then {
+              _.item(
+                _.icon := IconName.log,
+                "Sign out",
+                onClick --> { _ =>
+                  {
+                    authSerivce.logout
+                    router.router.pushState(Page.Home)
+                  }
+                }
+              )
+            } else emptyMod,
+            if !authSerivce.isLoggedIn then {
+              _.item(
+                _.icon := IconName.log,
+                "Log in",
+                router.router.navigateTo(Page.Login)
+              )
+            } else emptyMod,
+            if !authSerivce.isLoggedIn then {
+              _.item(
+                _.icon := IconName.log,
+                "Register",
+                router.router.navigateTo(Page.Register)
+              )
+            } else emptyMod
+          )
         )
+      ),
+      ShellBar(
+        _.primaryTitle  := "Tasklist",
+        _.showCoPilot   := true,
+        _.slots.logo    := Icon(_.name := IconName.task),
+        _.slots.profile := p(
+          Icon(_.name := IconName.`user-settings`)
+        ),
+        _.events.onProfileClick.map(_.detail.targetRef) --> openPopoverBus.writer
       ),
       hDiv(
         SideNavigation(
@@ -38,27 +72,9 @@ case class Layout(authSerivce: AuthService, router: Router) {
           ),
           _.item(
             _.text := "Todos",
-            _.icon := IconName.home,
+            _.icon := IconName.`activity-items`,
             router.router.navigateTo(Page.TodoList),
             _.selected <-- router.router.currentPageSignal.map(_ == Page.TodoList)
-          ),
-          _.slots.fixedItems := SideNavigation.item(
-            _.text := "Login",
-            _.icon := IconName.`user-settings`,
-            router.router.navigateTo(Page.Login),
-            _.selected <-- router.router.currentPageSignal.map(_ == Page.Login)
-          ),
-          _.slots.fixedItems := SideNavigation.item(
-            _.text := "Register",
-            _.icon := IconName.`user-settings`,
-            router.router.navigateTo(Page.Register),
-            _.selected <-- router.router.currentPageSignal.map(_ == Page.Register)
-          ),
-          _.slots.fixedItems := SideNavigation.item(
-            _.text := "Logout",
-            _.icon := IconName.error,
-            onClick --> { _ => authSerivce.logout },
-            _.href := router.router.absoluteUrlForPage(Page.Home)
           )
         ),
         content

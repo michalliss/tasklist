@@ -4,4 +4,4 @@ import {setTheme} from "@ui5/webcomponents-base/dist/config/Theme.js";
 import './style.css'
 import './app/main.js'
 
-setTheme("sap_horizon_dark");
+//setTheme("sap_horizon_dark");

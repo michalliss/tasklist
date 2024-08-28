@@ -1,9 +1,9 @@
 package tasklist.frontend.pages
 
 import com.raquo.laminar.api.L.*
+import foxxy.frontend.utils.*
 import tasklist.frontend.services.HttpClient
 import zio.*
-import foxxy.frontend.utils.*
 
 case class HomePage(httpClient: HttpClient) {
   import httpClient.extensions._

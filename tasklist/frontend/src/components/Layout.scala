@@ -1,7 +1,7 @@
 package tasklist.frontend.components
 
 import be.doeraene.webcomponents.ui5.configkeys.{IconName, ListSeparator, PopoverPlacementType}
-import be.doeraene.webcomponents.ui5.{Icon, Popover, ShellBar, SideNavigation, Title, UList}
+import be.doeraene.webcomponents.ui5.{Icon, Popover, ShellBar, SideNavigation, UList}
 import com.raquo.laminar.api.L.*
 import foxxy.frontend.utils.*
 import org.scalajs.dom.HTMLElement

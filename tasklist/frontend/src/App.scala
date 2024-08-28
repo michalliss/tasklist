@@ -2,11 +2,11 @@ package tasklist.frontend
 
 import com.raquo.laminar.api.L.*
 import foxxy.frontend.utils.*
+import zio.*
 
 import services.Router.Page
 import services.Router.Page.*
 import services.Router
-import zio.*
 
 case class App(
     router: Router,

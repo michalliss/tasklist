@@ -3,16 +3,12 @@ package tasklist.frontend.pages
 import be.doeraene.webcomponents.ui5.{Button, Input, UList}
 import com.raquo.laminar.api.L.*
 import foxxy.frontend.utils.*
+import tasklist.frontend.services.{AuthService, HttpClient, Router}
+import tasklist.shared.Endpoints
+import tasklist.shared.Endpoints.{AddTodoRequest, TodoResponse, UpdateTodoRequest}
 import zio.*
 
 import java.util.UUID
-import tasklist.frontend.services.HttpClient
-import tasklist.frontend.services.AuthService
-import tasklist.frontend.services.Router
-import tasklist.shared.Endpoints.TodoResponse
-import tasklist.shared.Endpoints
-import tasklist.shared.Endpoints.AddTodoRequest
-import tasklist.shared.Endpoints.UpdateTodoRequest
 
 case class TodoListPage(httpClient: HttpClient, authService: AuthService, router: Router) {
   import httpClient.extensions._

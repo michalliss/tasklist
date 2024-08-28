@@ -8,8 +8,9 @@ import tasklist.frontend.services.{HttpClient, Router, StorageService}
 import tasklist.shared.Endpoints
 import tasklist.shared.Endpoints.RegisterRequest
 import zio.*
+import tasklist.frontend.services.AuthService
 
-case class RegisterPage(storage: StorageService, router: Router, httpClient: HttpClient) {
+case class RegisterPage(router: Router, httpClient: HttpClient, authService: AuthService) {
   import httpClient.extensions._
 
   sealed trait Command
@@ -31,7 +32,7 @@ case class RegisterPage(storage: StorageService, router: Router, httpClient: Htt
           .tap(x =>
             ZIO.attempt {
               messages.emit(s"Register succeeded")
-              storage.set("token", x)
+              authService.login(x)
               router.router.pushState(Router.Page.TodoList)
             }
           )

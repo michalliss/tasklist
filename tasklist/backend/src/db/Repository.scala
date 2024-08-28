@@ -29,7 +29,7 @@ case class Repository(schema: Schema, dataSource: DataSource) {
     private def toDb(domain: TodoItem)          = Schema.TodoItemDB(domain.id, domain.userId, domain.text, domain.completed)
     private def c                               = crud(dataSource, schema.todoItems)
 
-    def byUserId(userId: UUID)     = run(schema.todoItems.filter(_.user_id == lift(userId))).map(_.map(toDomain))
+    def byUserId(userId: UUID)     = run(schema.todoItems.sortBy(_.id).filter(_.user_id == lift(userId))).map(_.map(toDomain))
     def find(id: UUID)             = c.find(id).map(_.map(toDomain))
     def update(todoItem: TodoItem) = c.update(toDb(todoItem))
     def insert(todoItem: TodoItem) = c.insert(toDb(todoItem))

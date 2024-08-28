@@ -14,15 +14,8 @@ case class App(
     homePage: pages.HomePage,
     todoListPage: pages.TodoListPage,
     loginPage: pages.LoginPage,
-    registerPage: pages.RegisterPage,
-    authService: services.AuthService
+    registerPage: pages.RegisterPage
 ) {
-
-  def auth[R](render: ZIO[R, Throwable, HtmlElement]) = {
-    if (authService.isLoggedIn) then render
-    else { ZIO.attempt { router.router.pushState(Page.Login); div() } }
-  }
-
   def renderPage(page: Page) = page.match
     case Home     => homePage.render.flatMap(layout.layout)
     case TodoList => todoListPage.render.flatMap(layout.layout)

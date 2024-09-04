@@ -25,16 +25,16 @@ object tasklist extends Module {
   object backend extends AppScalaModule {
     def moduleDeps = Seq(shared.jvm)
     def ivyDeps    = Agg(
-      ivy"io.github.michalliss::foxxy-backend:0.0.4",
-      ivy"io.github.michalliss::foxxy-repo:0.0.4",
-      ivy"io.github.michalliss::foxxy-auth:0.0.4",
+      ivy"io.github.michalliss::foxxy-backend:0.0.5",
+      ivy"io.github.michalliss::foxxy-repo:0.0.5",
+      ivy"io.github.michalliss::foxxy-auth:0.0.5",
       ivy"dev.zio::zio-logging:2.3.1",
       ivy"dev.zio::zio-logging-slf4j2-bridge:2.3.1"
     )
 
     object test extends ScalaTests with TestModule.ZioTest {
       def ivyDeps = Agg(
-        ivy"io.github.michalliss::foxxy-testing:0.0.4",
+        ivy"io.github.michalliss::foxxy-testing:0.0.5",
         ivy"dev.zio::zio-test:2.1.8",
         ivy"dev.zio::zio-test-sbt:2.1.8",
         ivy"dev.zio::zio-test-magnolia:2.1.8"
@@ -47,7 +47,7 @@ object tasklist extends Module {
 
     def moduleDeps = Seq(shared.js)
     def ivyDeps    = Agg(
-      ivy"io.github.michalliss::foxxy-frontend::0.0.4",
+      ivy"io.github.michalliss::foxxy-frontend::0.0.5",
       ivy"be.doeraene::web-components-ui5::2.0.0-RC2"
     )
   }
@@ -56,11 +56,11 @@ object tasklist extends Module {
     trait SharedModule extends AppScalaModule with PlatformScalaModule
 
     object jvm extends SharedModule {
-      def ivyDeps = Agg(ivy"io.github.michalliss::foxxy-shared:0.0.4")
+      def ivyDeps = Agg(ivy"io.github.michalliss::foxxy-shared:0.0.5")
     }
 
     object js extends SharedModule with AppScalaJSModule {
-      def ivyDeps = Agg(ivy"io.github.michalliss::foxxy-shared::0.0.4")
+      def ivyDeps = Agg(ivy"io.github.michalliss::foxxy-shared::0.0.5")
     }
   }
 

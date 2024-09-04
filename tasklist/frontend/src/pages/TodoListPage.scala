@@ -70,7 +70,6 @@ case class TodoListPage(httpClient: HttpClient, authService: AuthService, router
     Input(
       width.percent(100),
       placeholder := "Search",
-      _.valueState := ValueState.Information,
       onInput.mapToValue.map(Command.Filter.apply) --> onSearch
     )
   }
@@ -109,16 +108,18 @@ case class TodoListPage(httpClient: HttpClient, authService: AuthService, router
   }
 
   def ListComponent(items: List[TodoResponse], onRemove: Observer[Command.Delete], onItemUpdate: Observer[Command.Update]) = {
-    UList(
-      items.map { item =>
-        ListItem(
-          ItemComponent(
-            item,
-            onRemove.contramap(_ => Command.Delete(item.id)),
-            onItemUpdate.contramap(x => Command.Update(item.id, x))
+    hDiv(
+      UList(
+        items.map { item =>
+          ListItem(
+            ItemComponent(
+              item,
+              onRemove.contramap(_ => Command.Delete(item.id)),
+              onItemUpdate.contramap(x => Command.Update(item.id, x))
+            )
           )
-        )
-      }
+        }
+      )
     )
   }
 

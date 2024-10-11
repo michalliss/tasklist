@@ -7,7 +7,7 @@ import scalajslib._
 import mill.scalajslib.api.ModuleKind
 
 object config {
-  val scalaVersion = "3.5.1"
+  val scalaVersion   = "3.5.1"
   val scalaJSVersion = "1.17.0"
 }
 
@@ -36,9 +36,9 @@ object tasklist extends Module {
     object test extends ScalaTests with TestModule.ZioTest {
       def ivyDeps = Agg(
         ivy"io.github.michalliss::foxxy-testing:0.0.5",
-        ivy"dev.zio::zio-test:2.1.9",
-        ivy"dev.zio::zio-test-sbt:2.1.9",
-        ivy"dev.zio::zio-test-magnolia:2.1.9"
+        ivy"dev.zio::zio-test:2.1.11",
+        ivy"dev.zio::zio-test-sbt:2.1.11",
+        ivy"dev.zio::zio-test-magnolia:2.1.11"
       )
     }
   }

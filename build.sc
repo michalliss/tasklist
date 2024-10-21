@@ -29,8 +29,8 @@ object tasklist extends Module {
       ivy"io.github.michalliss::foxxy-backend:0.0.5",
       ivy"io.github.michalliss::foxxy-repo:0.0.5",
       ivy"io.github.michalliss::foxxy-auth:0.0.5",
-      ivy"dev.zio::zio-logging:2.3.1",
-      ivy"dev.zio::zio-logging-slf4j2-bridge:2.3.1"
+      ivy"dev.zio::zio-logging:2.3.2",
+      ivy"dev.zio::zio-logging-slf4j2-bridge:2.3.2"
     )
 
     object test extends ScalaTests with TestModule.ZioTest {
